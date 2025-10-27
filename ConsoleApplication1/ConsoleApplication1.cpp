@@ -7,8 +7,6 @@
 
 using namespace std;
 
-/* ghghghg */
-
 int saveResultsMenu(const string options[], int size) {
     int choice = 0;
     while (true) {
