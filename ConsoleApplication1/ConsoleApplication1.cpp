@@ -7,7 +7,79 @@
 
 using namespace std;
 
-/* ghghghg */
+//Check of Input
+
+void checkValidPressOne(int value) {
+    if (cin.fail() || value != 1) {
+        cin.clear();
+        cin.ignore(1000, '\n');
+        throw "Input correct data!";
+    }
+}
+
+void checkInputOfN(int n) {
+    if (cin.fail() || n <= 1) {
+        cin.clear();
+        cin.ignore(1000, '\n');
+        throw "Input correct data!";
+    }
+}
+
+void checkInputOfA(double a) {
+    if (cin.fail()) {
+        cin.clear();
+        cin.ignore(1000, '\n');
+        throw "Input correct data!";
+    }
+}
+
+void checkInputOfB(double a, double b) {
+    if (cin.fail() || b <= a) {
+        cin.clear();
+        cin.ignore(1000, '\n');
+        throw "Input correct data! (b > a)";
+    }
+}
+
+void checkInputOfStep(double step) {
+    if (cin.fail() || step <= 0) {
+        cin.clear();
+        cin.ignore(1000, '\n');
+        throw "Input correct data";
+    }
+}
+
+double functionCalculations(int n, double step, double a, double b) {
+    double x, y;
+    string results;
+    for (x = a; x <= b; x += step) {
+        double mlt = 1, sum = 0;
+
+        if (x < -2) {
+            for (int i = 0; i <= n + 3; i++) {
+                for (int j = 0; j <= n; j++) {
+                    sum += pow(i + x - j, 2);
+                }
+            }
+            y = sum;
+        }
+        else {
+            for (int j = 1; j <= n; j++) {
+                mlt *= (7 * x - j);
+            }
+            for (int j = 1; j <= n; j++) {
+                sum += ((j + 2) / pow(j, 2));
+            }
+            y = (mlt - 6 * x * sum);
+        }
+
+
+        cout << "x = " << x << ";  y = " << y << ";\n";
+        results += "x = " + to_string(x) + ";  y = " + to_string(y) + ";\n";
+    }
+    return y;
+}
+
 
 int saveResultsMenu(const string options[], int size) {
     int choice = 0;
@@ -70,130 +142,74 @@ int finalMenu(const string options[], int size) {
 }
 
 
-void calculateFunction() {
+int calculateFunction() {
     int n;
     double a, b, y, x, step;
     string results;
 
     // Welcome screen
 
-    int press;
-    cout << "\n---------------------------------------------\n";
-    cout << "         Function Calculation App             \n";
-    cout << "---------------------------------------------\n";
-    cout << "Welcome to the function calculation application.\n";
-    cout << "Press 1 to start input of data.\n";
+    try {
+        int press;
 
+        cout << "\n---------------------------------------------\n";
+        cout << "         Function Calculation App             \n";
+        cout << "---------------------------------------------\n";
+        cout << "Welcome to the function calculation application.\n";
+        cout << "Press 1 to start input of data.\n";
 
-    while (true) {
         cout << "\nYour answer: ";
         cin >> press;
+        checkValidPressOne(press);
 
-        if (cin.fail() || press != 1) {
-            cin.clear();
-            cin.ignore(1000, '\n');
-            cout << "Input correct data!" << endl;
-        }
-        else {
-            break;
-        }
-    }
+        cin.ignore();
+        system("cls");
 
-    cin.ignore();
-    system("cls");
+        //Input screen
 
-    //Input screen
+        cout << "---------------------------------------------\n";
+        cout << "                Input of Data                 \n";
+        cout << "---------------------------------------------\n";
 
-    cout << "---------------------------------------------\n";
-    cout << "                Input of Data                 \n";
-    cout << "---------------------------------------------\n";
-    while (true) {
         cout << "\nInput n > 1, n = ";
         cin >> n;
+        checkInputOfN(n);
 
-        if (cin.fail() || n <= 1) {
-            cin.clear();   
-            cin.ignore(1000, '\n');   
-            cout << "Input correct data!";
-        } 
-        else {
-            break;
-        }
-    }
-    while (true) {
         cout << "\nInput a, a = ";
         cin >> a;
+        checkInputOfA(a);
 
-        if (cin.fail()) {
-            cin.clear();
-            cin.ignore(1000, '\n');
-            cout << "Input correct data!" << endl;
-        }
-        else {
-            cin.ignore(1000, '\n');
-            break;
-        }
-    }
-    while (true) {
         cout << "\nInput b > a, b = ";
         cin >> b;
+        checkInputOfB(a, b);
 
-        if (cin.fail() || b <= a) {
-            cin.clear();
-            cin.ignore(1000, '\n');
-            cout << "Input correct data! (b > a)" << endl;
-        }
-        else {
-            break;
-        }
-    }
-    while (true) {
         cout << "\nInput step > 0, step = ";
         cin >> step;
+        checkInputOfStep(step);
+    
 
-        if (cin.fail() || step <= 0) {
-            cin.clear();
-            cin.ignore(1000, '\n');
-            cout << "Input correct data!" << endl;
-        }
-        else {
-            break;
-        }
+        cin.ignore();
+        cout << "\nWe got your input. Press ENTER to see results...";
+        cin.get();
+
+        // Results
+
+        system("cls");
+
+        cout << "---------------------------------------------\n";
+        cout << "          Results of the Function             \n";
+        cout << "---------------------------------------------\n";
+
+        functionCalculations(n, step, a, b);
+
     }
-    cin.ignore();
-    cout << "\nWe got your input. Press ENTER to see results...";
-    cin.get();
-
-    // Results
-
-    system("cls");
-    cout << "---------------------------------------------\n";
-    cout << "          Results of the Function             \n";
-    cout << "---------------------------------------------\n";
-
-    for (x = a; x <= b; x += step) {
-        double mlt = 1, sum = 0;
-
-        if (x < -2) {
-            for (int i = 0; i <= n + 3; i++) {
-                for (int j = 0; j <= n; j++) {
-                    sum += pow(i + x - j, 2);
-                }
-            }
-            y = sum;
-        }
-        else {
-            for (int j = 1; j <= n; j++) {
-                mlt *= (7 * x - j);
-            }
-            for (int j = 1; j <= n; j++) {
-                sum += ((j + 2) / pow(j, 2));
-            }
-            y = (mlt - 6 * x * sum);
-        }
-
-        cout << "x = " << x << ";  y = " << y << ";\n";
-        results += "x = " + to_string(x) + ";  y = " + to_string(y) + ";\n";
+    catch (const char* ex) {
+        cout << ex << endl;
+        return -1;
+    }
+    catch (...) {
+        cout << "Unknown error" << endl;
+        return -2;
     }
 
     cout << "\nPress ENTER to continue...";
@@ -232,6 +248,8 @@ void calculateFunction() {
         cout << "\nExiting program...\nGoodbye!\n";
         system("exit");
     }
+
+    return 0;
 }
 
 int main() {
