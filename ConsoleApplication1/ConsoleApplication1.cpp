@@ -5,6 +5,8 @@
 #include <conio.h> 
 #include <cstdlib> 
 
+// test
+
 using namespace std;
 
 //Check of Input
@@ -89,7 +91,7 @@ int saveResultsMenu(const string options[], int size) {
         cout << "---------------------------------------------\n";
         cout << "             Save results menu               \n";
         cout << "---------------------------------------------\n";
-        cout << "Do you want to save results in the file?\n";
+        cout << "Do you want to save the results in the file?\n";
 
         for (int i = 0; i < size; i++) {
             if (i == choice)
